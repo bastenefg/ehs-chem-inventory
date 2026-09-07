@@ -1,6 +1,6 @@
 # Security policy
 
-ChemInventory is a lab-developed inventory tool. Source availability and passing tests help review it; they are not an independent security certification or MIT approval. The current source is 2.2.1. Older pilot APKs do not receive fixes automatically.
+ChemInventory is a lab-developed inventory tool. Source availability and passing tests help review it; they are not an independent security certification or MIT approval. The current version is 2.2.2, available as a signed APK in [GitHub Releases](https://github.com/bastenefg/ehs-chem-inventory/releases/tag/v2.2.2). Updates are installed manually. Older pilot APKs do not receive fixes automatically.
 
 ## Report a vulnerability privately
 
@@ -24,3 +24,5 @@ The app requests Internet and Camera permissions, uses Android's system picker f
 Build from a reviewed commit using the included Gradle wrapper. GitHub Actions checks source with read-only repository permissions and requires no lab credentials. Dependency-update proposals still need review and testing.
 
 Pilot debug APKs are for evaluation. For distribution, use a non-debug release signed with a privately managed maintainer key, publish the APK SHA-256 and signing-certificate SHA-256, and use the same key for updates. A checksum verifies matching bytes; it does not establish that the app is secure or that MIT endorses it. See [release and repository guidance](docs/GITHUB_SHARING.md).
+
+The public release signing certificate SHA-256 is `fb0291c575d1260c11eb9f83281c2fb8d7fd20886a054253cf1ccd8d41346b23`. This is public verification information, not a secret. Earlier debug APKs use a different key; see the [migration instructions](docs/ANDROID_INSTALL.md#already-have-a-pilot-copy-installed) before changing an existing installation.

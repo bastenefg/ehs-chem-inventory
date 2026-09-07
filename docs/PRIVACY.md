@@ -1,6 +1,6 @@
 # How this lab inventory tool handles data
 
-This describes the supplied version 2.2.1 Android app and updated per-lab connector. It is a lab-developed tool, not an official MIT EHS service. Each deploying lab controls its accounts, sharing, retention and support arrangements; the lab owner should provide reps with a contact before rollout.
+This describes the supplied version 2.2.2 Android app and updated per-lab connector. It is a lab-developed tool, not an official MIT EHS service. Each deploying lab controls its accounts, sharing, retention and support arrangements; the lab owner should provide reps with a contact before rollout.
 
 | Data | Where it goes or stays |
 | --- | --- |

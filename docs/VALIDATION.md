@@ -2,6 +2,18 @@
 
 Verified on September 6–7, 2026.
 
+## Version 2.2.2 signed APK
+
+- Built the first public installer, **2.2.2 / version code 6**, application ID `com.example.cheminventory`, minimum Android 8.0/API 26. Its release manifest is not debuggable. The APK includes the [dependency inventory and license texts](../THIRD_PARTY_NOTICES.md).
+- Updated all four CameraX dependencies from 1.3.4 to 1.4.2. Inspection found 4 KB-aligned native load segments in the old image-processing library. All **12 native libraries / 32 load segments** in the signed APK have 16 KB alignment and matching file-offset/virtual-address alignment; signed ZIP alignment also passes. This is a binary compatibility check, not a physical-device camera test.
+- **61 JVM tests passed**, no failures or skips, after the dependency update. Lint passed with **zero errors, 34 warnings and one hint**. No suppression or baseline was added.
+- **29 instrumentation tests passed**, no failures or skips, on the disposable API 36.1 x86_64 emulator after rebuilding. An initial test-runner launch stopped without a recorded app exception; the complete rerun passed. The emulator also had a System UI stall, which was dismissed before checking the signed app's visible setup screen.
+- Fresh-installed the final signed APK on that emulator, launched it, checked its installed version/non-debug flags and blank setup screen, then successfully reinstalled the same APK using the same key and launched it again. This smoke check establishes installer/update acceptance; it does not claim a real lab migration or physical-camera test. No physical phone was modified.
+- `apksigner` verifies **v2 and v3 signatures** with one dedicated RSA-3072 release identity. Public certificate SHA-256: `fb0291c575d1260c11eb9f83281c2fb8d7fd20886a054253cf1ccd8d41346b23`. The password-protected private key and Windows-protected credential stay in an ignored local directory; [secure off-device backup remains the maintainer's responsibility](MAINTAINER_SIGNING.md).
+- APK SHA-256: `48cd9b1318863c95fb3da0166d9ff2497034538e9f842f42bf1bc88b4f1e961e`. Release assets include a matching `SHA256SUMS.txt`; the release notes identify the exact source commit. APK size: 8,863,647 bytes.
+
+The connector is unchanged from the 226 passing checks in 2.2.1. No live Parley request, Google setup/save, physical camera check or EHSA submission was performed for this packaging release. The earlier live-validation limits still apply. The installer remains a lab pilot, with [migration instructions for existing debug builds](ANDROID_INSTALL.md#already-have-a-pilot-copy-installed). CI now also compiles an unsigned release; it never receives signing credentials.
+
 ## Version 2.2.1 publication checks
 
 - Built debug and unsigned release APKs for **2.2.1 / version code 5** using patched Gradle 8.14.5 and ExifInterface 1.4.2. The release manifest is not debuggable. The debug APK retains the prior pilot's signing certificate; no new release key was created and no APK is included in the public source tree.
@@ -69,7 +81,7 @@ The owner subsequently reported **“It works now!”** after the recovery proce
 2. Create a fresh standalone Apps Script project with both updated files under an approved lab account. Inspect its actual consent screen for per-file access without account-wide Sheets or HTML-dialog permissions, initialize and deploy it, check the returned Sheet identity, and test a reviewed record plus a retry. Offline mocks cannot verify real Google permissions, quotas, deployment restrictions or network behavior. Normal consent and privacy/branding notices can remain.
 3. Review an EHSA snapshot with the EHS coordinator before importing. The exact source headings/unit codes are mapped, but live importer acceptance and lab-specific PI authorization have not been tested. The app does not submit the full inventory or the separate Atlas annual report.
 4. Test physical-camera focus/orientation and representative labels on the intended phones. The emulator tests exercise manual entry and recovery, not physical bottle recognition.
-5. For distribution beyond a pilot, produce an APK signed with the maintainer's release key and preserve that signing key for future upgrades. The supplied debug APK is an evaluation build.
+5. The public 2.2.2 APK now uses a dedicated release key. Preserve that key and its password in a secure backup for future updates, and use the migration instructions for earlier debug builds. Signing alone does not complete the live checks above.
 6. The owner of the original fixed backend should revoke/rotate the credential embedded in old builds before sharing them. This update did not contact or alter that backend, its token, or its worksheet.
 
 No production worksheet was created, changed or submitted. No real label photo was sent to Parley during these checks. Tests targeted only a disposable emulator; the connected physical phone was not modified.

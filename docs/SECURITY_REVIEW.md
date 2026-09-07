@@ -1,5 +1,7 @@
 # Publication review — 2.2.1
 
+This records the initial source review. The subsequent 2.2.2 signed APK adds a dedicated release identity, installation/migration guidance, bundled dependency notices, and CameraX 1.4.2 for native 16 KB page compatibility. See the [2.2.2 verification record](VALIDATION.md#version-222-signed-apk) and [release-signing procedure](MAINTAINER_SIGNING.md).
+
 Reviewed September 7, 2026. This is a source/configuration review with automated tests, not an independent penetration test, security certification or MIT endorsement. It covers the candidate source for the first publication to `bastenefg/ehs-chem-inventory`; older local distribution archives are excluded.
 
 ## Issues found and addressed
@@ -26,7 +28,7 @@ GitHub workflow actions are pinned to verified full commit IDs with read-only re
 
 ## Remaining deployment limits
 
-The source can be reviewed and shared as a lab pilot. A broadly distributed installer still needs a privately managed release signing identity and a documented update path from earlier debug pilots. This review does not turn the old 2.2 debug APK into a production release. See [release guidance](GITHUB_SHARING.md).
+The source can be reviewed and shared as a lab pilot. At this initial source review, an installer still needed a privately managed release signing identity and a documented update path from earlier debug pilots; version 2.2.2 supplies those separately. This review does not turn the old 2.2 debug APK into a production release. See [release guidance](GITHUB_SHARING.md).
 
 The per-lab connector intentionally trusts its owner/editors and uses a shared append token. It does not authenticate each rep separately or prevent public callers from consuming some Apps Script quota. An owner changing a deployment's destination is a trusted configuration change; do not reuse a deployment across labs. CAS/OCR can still be wrong, and the worksheet is not an MIT reporting submission. See [SECURITY.md](../SECURITY.md) and [PRIVACY.md](PRIVACY.md).
 

@@ -2,11 +2,15 @@
 
 An Android tool for MIT lab chemical inventories. Photograph or import a label, review the extracted fields, and send the record to a Google Sheet owned by your lab. Each rep brings their own MIT Parley key; no lab identity or service credential is built into the APK.
 
+[**Download the Android app (2.2.2)**](https://github.com/bastenefg/ehs-chem-inventory/releases/download/v2.2.2/ChemInventory-2.2.2.apk) · [Installation guide](docs/ANDROID_INSTALL.md) · [Release notes](https://github.com/bastenefg/ehs-chem-inventory/releases/tag/v2.2.2)
+
+The ready-to-install APK works on Android 8.0 or later. You do not need Android Studio or to build the app yourself. If you already have a pilot copy installed, read the [migration note](docs/ANDROID_INSTALL.md#already-have-a-pilot-copy-installed) first.
+
 This is a lab-developed tool, not an official MIT EHS application. It supports inventory preparation and human review. Saving a row does not submit the full inventory or the separate annual regulated-chemical report.
 
 ## Status and data handling
 
-**2.2.1 is a lab pilot.** The source is available for review under the [MIT open-source license](LICENSE); this does not imply MIT endorsement. There is no production-signed APK bundled in the source repository. See [release instructions](docs/GITHUB_SHARING.md) before distributing an installer.
+**2.2.2 is a lab pilot.** A signed Android installer is available in [GitHub Releases](https://github.com/bastenefg/ehs-chem-inventory/releases/tag/v2.2.2). The source is available for review under the [MIT open-source license](LICENSE); this does not imply MIT endorsement. A release signature identifies the publisher and allows compatible future updates; it is not a security certification.
 
 Photos go to MIT Parley. Missing-CAS lookups send the chemical name to public PubChem. Reviewed records go to the lab's private Google Sheet. The app requests Camera and Internet permissions; the connector requests Google's per-file `drive.file` permission. Each lab controls its own accounts and sharing. Read [data handling](docs/PRIVACY.md), [security boundaries and reporting](SECURITY.md), and [the actual verification results](docs/VALIDATION.md).
 
@@ -14,10 +18,10 @@ The repository includes automated Android/connector checks and dependency-update
 
 ## Installation
 
-**Already connected successfully?** Keep your worksheet, URL and token. Version 2.2.1 adds app and connector fixes: update the app using a build signed with your existing key, replace **Code.gs** in the existing script project, and deploy a new version of that same deployment as described under [maintenance](docs/GOOGLE_SHEETS_SETUP.md#maintain-the-worksheet). Do not reinitialize or repeat recovery. The installation procedure below is for new labs.
+**Already connected successfully?** Keep your worksheet, URL and token. The first public APK uses a dedicated release signing key, so it cannot update an earlier debug-signed pilot in place. Follow the [migration note](docs/ANDROID_INSTALL.md#already-have-a-pilot-copy-installed) before changing an existing installation. For the connector fixes, replace **Code.gs** in the existing script project and deploy a new version of that same deployment as described under [maintenance](docs/GOOGLE_SHEETS_SETUP.md#maintain-the-worksheet). Do not reinitialize or repeat recovery. The installation procedure below is for new labs.
 
 1. **Worksheet owner:** follow [Google Sheets setup](docs/GOOGLE_SHEETS_SETUP.md) once to create a private lab worksheet and its connector. Give trusted reps the deployment URL and generated connection token through your lab's approved private channel.
-2. **Each rep:** install the APK using the lab's approved process. Open **Lab setup** and enter the lab name, PI/supervisor and default building-room.
+2. **Each rep:** [download and install the Android app](docs/ANDROID_INSTALL.md). Open **Lab setup** and enter the lab name, PI/supervisor and default building-room.
 3. Sign in at [MIT Parley](https://parley.mit.edu/), open **Parley API**, generate your key and paste it into the app. The initial API base is `https://parley.api.mit.edu/v1`, supplied by the app owner and checked for reachability. Choose an image-capable model available to your account; **Check connections** can retrieve the model list.
 4. Paste the worksheet connector URL and its connection token. Check the connection, open the returned Sheet link and confirm the lab. Save the setup.
 5. Scan one label. A progress bar shows photo preparation and label reading. Missing CAS numbers are looked up in PubChem automatically while you edit; a single unambiguous full-name match fills the CAS field and records its source. Mixtures, concentration-qualified products and ambiguous results remain for review. Check the fields against the label/SDS, confirm review and save. Verify the first row in the shared Sheet before an inventory session. See [scan speed and CAS lookup](docs/SCANNING_AND_CAS.md).
@@ -26,6 +30,7 @@ No terminal, personal Google API key, custom Google Cloud project, or service-ac
 
 ## What changed in version 2
 
+- Version 2.2.2: first downloadable APK signed with a dedicated release key, Android installation/migration instructions, bundled dependency notices, and CameraX 1.4.2 native libraries for 16 KB page compatibility.
 - Version 2.2.1: CAS lookup preserves conflicting label evidence and explicit no-CAS explanations; Parley keys are restricted to the verified API host. Connector retries reject changed content for an existing record ID, token rotation works during Google outages, and incomplete setup properties cannot silently create a new destination. Includes updated Gradle/EXIF parsing, verified wrapper checksums, CI, security documentation and an MIT license.
 - Version 2.2: direct screen labels, simpler layouts, progress bars from capture/import through label reading, and automatic CAS filling for a unique full-name PubChem match. Background lookup also follows chemical-name edits and reopening incomplete drafts. New installations use the verified Drive-based worksheet creation flow.
 - Version 2.1: optional minimal-reasoning GPT-5 requests, separate scan timings, more tolerant reading of printed CAS numbers, and background PubChem CAS proposals with source links, explicit identity confirmation and an in-memory cache. No extra service key is needed.
@@ -54,6 +59,8 @@ MIT documents user-generated API keys in its [Parley API overview](https://mitsl
 Keys are created in Parley's portal. This app does not mint keys or automate MIT sign-in. Replace or clear a key in **Lab setup**. Never put a key in a source file, Sheet cell, screenshot or support log.
 
 ## Build and verify
+
+Building is optional for developers. Lab reps can use the [ready-to-install APK](docs/ANDROID_INSTALL.md).
 
 Open the project in Android Studio with Android SDK 36 and a JDK supported by Android Gradle Plugin 8.13.2 (the bundled Android Studio JDK works). Android 8.0/API 26 is the minimum device version. The project retains the original application ID `com.example.cheminventory` so appropriately signed upgrades can preserve app data.
 
